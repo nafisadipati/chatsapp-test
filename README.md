@@ -1,0 +1,181 @@
+# Laravel Chat Application
+
+This is a Laravel-based chat application that provides real-time messaging functionality with support for chatrooms, user authentication, and media attachments.
+
+## Table of Contents
+
+1. [Installation](#installation)
+2. [Access and Usage](#access-and-usage)
+3. [Routes and Controllers](#routes-and-controllers)
+   - [Authentication Routes](#authentication-routes)
+   - [Chatroom Routes](#chatroom-routes)
+   - [Message Routes](#message-routes)
+5. [Detailed API Guide](#detailed-api-guide)
+
+---
+
+## Installation
+
+1. **Clone the Repository**:
+    ```bash
+    git clone <repository-url>
+    cd whatsapp-clone
+    ```
+
+2. **Install Dependencies**:
+    Ensure you have `composer` installed, then run:
+    ```bash
+    composer install
+    ```
+
+3. **Set Up Environment**:
+    - Duplicate `.env.example` to `.env`.
+    - Set up the database connection, Pusher credentials, and other environment-specific values.
+
+4. **Generate Application Key**:
+    ```bash
+    php artisan key:generate
+    ```
+
+5. **Run Migrations**:
+    ```bash
+    php artisan migrate
+    php artisan seed
+    ```
+
+6. **Start the Server**:
+    ```bash
+    php artisan serve
+    ```
+
+
+## Access and Usage
+
+The application can be accessed via `http://localhost:8000` once the server is running.
+
+### Public Routes
+
+- **Home**: `/`
+- **Login**: `/login`
+
+### Protected Routes
+
+These routes require user authentication:
+
+- Chatroom and messaging functionalities require the user to be logged in.
+
+---
+
+## Routes and Controllers
+
+### Authentication Routes
+
+| Route     | Method | Controller      | Description                     |
+|-----------|--------|------------------|---------------------------------|
+| `/login`  | GET    | AuthController    | Display login form              |
+| `/login`  | POST   | AuthController    | Authenticate the user           |
+| `/logout` | POST   | AuthController    | Log out the user                |
+
+**AuthController** handles user authentication, including login and logout.
+
+### Chatroom Routes
+
+| Route                       | Method | Controller        | Description                     |
+|-----------------------------|--------|-------------------|---------------------------------|
+| `/chatrooms`                | GET    | ChatroomController | List all chatrooms              |
+| `/chatrooms/{id}`           | GET    | ChatroomController | Display specific chatroom       |
+| `/chatrooms`                | POST   | ChatroomController | Create a new chatroom           |
+| `/chatrooms/{id}/enter`     | GET    | ChatroomController | Enter a specific chatroom       |
+| `/chatrooms/{id}/leave`     | GET    | ChatroomController | Leave a specific chatroom       |
+
+**ChatroomController** manages chatroom creation, listing, and user interactions within chatrooms.
+
+### Message Routes
+
+| Route                                    | Method | Controller       | Description                   |
+|------------------------------------------|--------|-------------------|-------------------------------|
+| `/chatrooms/{chatroomId}/messages`      | GET    | MessageController | List all messages in chatroom |
+| `/chatrooms/{chatroomId}/messages`      | POST   | MessageController | Send a message                |
+
+**MessageController** handles sending and listing messages in a chatroom.
+
+---
+
+## Detailed API Guide
+
+### Authentication
+
+#### Login (POST `/login`)
+
+- **Info**:
+  - You can look at UsersTableSeeder to see the credentials for logging in
+
+- **Parameters**:
+  - `email` (string, required) 
+  - `password` (string, required)
+
+- **Response**:
+  - **Success**: Redirect to chatroom view.
+  - **Failure**: Returns error message for invalid credentials.
+
+#### Logout (POST `/logout`)
+
+- Logs the user out and redirects to the login screen.
+
+---
+
+### Chatroom Management
+
+#### List Chatrooms (GET `/chatrooms`)
+
+- **Description**: Retrieves all available chatrooms.
+
+- **Response**:
+  - JSON array of all chatrooms with details.
+
+#### Create Chatroom (POST `/chatrooms`)
+
+- **Parameters**:
+  - `name` (string, required): Name of the chatroom.
+  - `max_members` (integer, required): Maximum number of members.
+
+- **Response**:
+  - JSON object with the created chatroom's data.
+
+#### Enter Chatroom (GET `/chatrooms/{id}/enter`)
+
+- **Description**: Allows a user to enter a specific chatroom if not full.
+
+- **Response**:
+  - **Success**: JSON message confirming entry.
+  - **Failure**: Error if the chatroom is full or the user is already a member.
+
+#### Leave Chatroom (GET `/chatrooms/{id}/leave`)
+
+- **Description**: Allows a user to leave a chatroom.
+
+- **Response**:
+  - **Success**: JSON message confirming user left the chatroom.
+  - **Failure**: Error if the user is not a member of the chatroom.
+
+---
+
+### Messaging
+
+#### List Messages (GET `/chatrooms/{chatroomId}/messages`)
+
+- **Description**: Lists all messages within a specific chatroom.
+
+- **Response**:
+  - JSON array of messages, each including user ID, content, and timestamp.
+
+#### Send Message (POST `/chatrooms/{chatroomId}/messages`)
+
+- **Parameters**:
+  - `chatroom_id` (integer, required): ID of the chatroom.
+  - `user_id` (integer, required): ID of the sender.
+  - `content` (string, optional): Message text content.
+  - `attachment` (file, optional): File attachment (image/video).
+
+- **Response**:
+  - JSON object with message details, including file URL if an attachment is provided.
