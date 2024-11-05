@@ -40,7 +40,7 @@ This is a Laravel-based chat application that provides real-time messaging funct
 5. **Run Migrations**:
     ```bash
     php artisan migrate
-    php artisan seed
+    php artisan db:seed
     ```
 
 6. **Start the Server**:
