@@ -53,6 +53,7 @@ Method Laravel\Lumen\Http\ResponseFactory::view does not exist, that's because o
 6. **Start the Server**:
     ```bash
     php artisan serve
+    php artisan queue:work
     ```
 7. **pusher credential**:
     ```bash
