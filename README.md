@@ -3,7 +3,8 @@
 This is a Laravel-based chat application that provides real-time messaging functionality with support for chatrooms, user authentication, and media attachments.
 
 # For the demo live (example)
-https://whatsapp-clone-seven-neon.vercel.app
+
+`whatsapp-clone-seven-neon.vercel.app`
 
 Because this uses the free Vercel demo server, you may encounter some errors, such as limited storage access, then error problems like
 Method Laravel\Lumen\Http\ResponseFactory::view does not exist, that's because of server limitations which can't access storage which in Laravel is very important, I've tried to update the setup but you can't expect much. therefore I highly recommend running manually using the procedures I mentioned below.
@@ -24,7 +25,7 @@ Method Laravel\Lumen\Http\ResponseFactory::view does not exist, that's because o
 
 1. **Clone the Repository**:
     ```bash
-    git clone <repository-url>
+    git clone <repository-url> whatsapp-clone
     cd whatsapp-clone
     ```
 
