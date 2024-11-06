@@ -2,6 +2,12 @@
 
 This is a Laravel-based chat application that provides real-time messaging functionality with support for chatrooms, user authentication, and media attachments.
 
+# For the demo live (example)
+https://whatsapp-clone-seven-neon.vercel.app
+
+Because this uses the free Vercel demo server, you may encounter some errors, such as limited storage access, then error problems like
+Method Laravel\Lumen\Http\ResponseFactory::view does not exist, that's because of server limitations which can't access storage which in Laravel is very important, I've tried to update the setup but you can't expect much. therefore I highly recommend running manually using the procedures I mentioned below.
+
 ## Table of Contents
 
 1. [Installation](#installation)
@@ -47,7 +53,13 @@ This is a Laravel-based chat application that provides real-time messaging funct
     ```bash
     php artisan serve
     ```
-
+7. **pusher credential**:
+    ```bash
+    PUSHER_APP_ID=1891238
+    PUSHER_APP_KEY=405a4e9cb8d5939e8833
+    PUSHER_APP_SECRET=b9957d7caea7df495934
+    PUSHER_APP_CLUSTER=ap1
+    ```
 
 ## Access and Usage
 
@@ -108,7 +120,7 @@ These routes require user authentication:
 #### Login (POST `/login`)
 
 - **Info**:
-  - You can look at UsersTableSeeder to see the credentials for logging in
+  - You can look at UsersTableSeeder to see the credentials for logging in or you can try user1@example.com and for the password is `password123`.
 
 - **Parameters**:
   - `email` (string, required) 
